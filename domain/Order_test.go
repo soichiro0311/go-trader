@@ -2,22 +2,31 @@ package domain
 
 import (
 	"fmt"
-	"math/big"
 	"testing"
 )
 
 func TestValidateAmount(t *testing.T) {
-	price := NewPrice("BTC", "USD", *big.NewFloat(100))
-	if error, order := NewOrder(*big.NewInt(200), "BTC", "USD", *price); error != nil {
-		fmt.Printf(order.Currency1)
+	currency1 := NewCurrency("BTC")
+	currency2 := NewCurrency("USD")
+	error, price := NewPrice(*currency1, *currency2, 100)
+	if error != nil {
+		t.Fail()
+	}
+	if error, order := NewOrder(200, *currency1, *currency2, *price); error != nil {
+		fmt.Print(order.Currency1)
 		t.Fatal()
 	}
 }
 
 func TestValidateAmountError(t *testing.T) {
-	price := NewPrice("BTC", "USD", *big.NewFloat(100))
-	if error, order := NewOrder(*big.NewInt(-1), "BTC", "USD", *price); error == nil {
-		fmt.Printf(order.Amount.String())
+	currency1 := NewCurrency("BTC")
+	currency2 := NewCurrency("USD")
+	error, price := NewPrice(*currency1, *currency2, 100)
+	if error != nil {
+		t.Fail()
+	}
+	if error, order := NewOrder(-1, *currency1, *currency2, *price); error == nil {
+		fmt.Print(order.Amount)
 		t.Fatal()
 	}
 }

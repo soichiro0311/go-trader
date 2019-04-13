@@ -2,39 +2,53 @@ package domain
 
 import (
 	"errors"
-	"math/big"
 	"math/rand"
+	"strconv"
 	"time"
 )
 
 type Order struct {
-	Id        int
-	Amount    big.Int
-	Currency1 string
-	Currency2 string
-	Price     Price
-	Quantity  big.Float
+	Id            string `gorm:"primary_key"`
+	Amount        int64
+	Currency1     Currency `sql:"-"`
+	CurrencyCode1 string
+	Currency2     Currency `sql:"-"`
+	CurrencyCode2 string
+	Quantity      float64
+	OrderDatetime string
 }
 
-func NewOrder(amount big.Int, currency1 string, currency2 string, price Price) (error, *Order) {
+func NewOrder(amount int64, currency1 Currency, currency2 Currency, price Price) (error, *Order) {
 	order := new(Order)
-	order.Price = price
-	order.Quantity = price.converToCurrency2(amount)
-
-	order.Amount = amount
-	err := order.validateAmount(amount)
-
-	order.Currency1 = currency1
-	order.Currency1 = currency2
 
 	rand.Seed(time.Now().UnixNano())
-	order.Id = rand.Int()
+	order.Id = strconv.Itoa(rand.Int())
+
+	order.Amount = amount
+	err := order.validateAmount()
+	order.Quantity = price.converToCurrency2(amount)
+
+	order.Currency1 = currency1
+	order.CurrencyCode1 = currency1.CurrencyCode
+	order.Currency2 = currency2
+	order.CurrencyCode2 = currency2.CurrencyCode
+
+	order.OrderDatetime = time.Now().Format("20060102150405")
 	return err, order
 }
 
-func (order *Order) validateAmount(amount big.Int) error {
-	if order.Amount.Cmp(big.NewInt(0)) <= 0 {
+func (order *Order) validateAmount() error {
+	if order.Amount <= 0 {
 		return errors.New("Order amount should be greater than 0")
 	}
 	return nil
+}
+
+func (order *Order) ToString() string {
+	return "id:" + order.Id +
+		" currency1:" + order.Currency1.Code() +
+		" currency2:" + order.Currency2.Code() +
+		" amount:" + strconv.FormatInt(order.Amount, 10) +
+		" quantity:" + strconv.FormatFloat(order.Quantity, 'e', 10, 64) +
+		" orderDatetime:" + order.OrderDatetime
 }
