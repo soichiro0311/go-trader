@@ -25,8 +25,7 @@ func TestValidateAmountError(t *testing.T) {
 	if error != nil {
 		t.Fail()
 	}
-	if error, order := NewOrder(-1, *currency1, *currency2, *price); error == nil {
-		fmt.Print(order.Amount)
+	if error, _ := NewOrder(-1, *currency1, *currency2, *price); error == nil {
 		t.Fatal()
 	}
 }

@@ -32,3 +32,29 @@ func TestRegisterOrder(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestOrders(t *testing.T) {
+	component.GetPriceGenerator().Generate("BTC", "USD")
+	var rep repository.OrderRepository = repository.NewOrderRepositoryMock()
+	service := NewOrderService(rep)
+	req1 := model.NewRegisterOrderRequest("BTC", "USD", 100)
+	service.RegisterOrder(*req1)
+	req2 := model.NewRegisterOrderRequest("BTC", "USD", 25)
+	service.RegisterOrder(*req2)
+
+	orders := service.Orders()
+	if len(orders) != 2 {
+		t.Fail()
+	}
+
+	for _, order := range orders {
+		if order.CurrencyCode1 != "BTC" {
+			t.Fail()
+		}
+
+		if order.CurrencyCode2 != "USD" {
+			t.Fail()
+		}
+	}
+
+}

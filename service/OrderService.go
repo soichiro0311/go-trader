@@ -2,6 +2,7 @@ package service
 
 import (
 	"../component"
+	"../domain"
 	"../model"
 	"../repository"
 )
@@ -21,4 +22,8 @@ func (service *OrderService) RegisterOrder(req model.RegisterOrderRequest) {
 	price := priceGenerator.GetLatestPrice()
 	order := req.ToOrder(*price)
 	service.repository.Save(*order)
+}
+
+func (service *OrderService) Orders() []*domain.Order {
+	return service.repository.FindAll()
 }

@@ -25,6 +25,6 @@ func (repository *orderRepositoryImpl) Save(order domain.Order) {
 
 func (repository *orderRepositoryImpl) FindAll() []*domain.Order {
 	result := []*domain.Order{}
-	repository.db.Find(result)
+	repository.db.Find(&result)
 	return result
 }

@@ -1,6 +1,7 @@
 package web
 
 import (
+	"../controller"
 	"github.com/gin-gonic/gin"
 )
 
@@ -15,6 +16,7 @@ func router(ctrl *controller.OrderController) *gin.Engine {
 	u := r.Group("/order")
 	{
 		u.POST("/register", ctrl.RegisterOrder)
+		u.GET("/all", ctrl.Orders)
 	}
 
 	return r

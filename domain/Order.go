@@ -8,14 +8,14 @@ import (
 )
 
 type Order struct {
-	Id            string `gorm:"primary_key"`
-	Amount        int64
-	Currency1     Currency `sql:"-"`
-	CurrencyCode1 string
-	Currency2     Currency `sql:"-"`
-	CurrencyCode2 string
-	Quantity      float64
-	OrderDatetime string
+	Id            string   `gorm:"primary_key" json:"id"`
+	Amount        int64    `json:"amount"`
+	Currency1     Currency `sql:"-" json:"-"`
+	CurrencyCode1 string   `json:"currency1"`
+	Currency2     Currency `sql:"-" json:"-"`
+	CurrencyCode2 string   `json:"currency2"`
+	Quantity      float64  `json:"quantity"`
+	OrderDatetime string   `json:"order_datetime"`
 }
 
 func NewOrder(amount int64, currency1 Currency, currency2 Currency, price Price) (error, *Order) {
