@@ -6,27 +6,27 @@ import (
 )
 
 type Price struct {
-	currency1 Currency
-	currency2 Currency
-	value     float64
+	Currency1 Currency `json:"currency1"`
+	Currency2 Currency `json:"currency2"`
+	Value     float64  `json:"value"`
 }
 
-func NewPrice(currency1 Currency, currency2 Currency, value float64) (error, *Price) {
+func NewPrice(currency1 Currency, currency2 Currency, value float64) (error, Price) {
 	price := new(Price)
-	price.currency1 = currency1
-	price.currency2 = currency2
+	price.Currency1 = currency1
+	price.Currency2 = currency2
 	err := price.validateCurrency()
-	price.value = value
-	return err, price
+	price.Value = value
+	return err, *price
 }
 
-func (price *Price) converToCurrency2(amount int64) float64 {
-	quantity := price.value * float64(amount)
+func (price *Price) converToCurrency2(amount float64) float64 {
+	quantity := price.Value * float64(amount)
 	return round(quantity, .5, 5)
 }
 
 func (price *Price) validateCurrency() error {
-	if price.currency1.CurrencyCode == price.currency2.CurrencyCode {
+	if price.Currency1.CurrencyCode == price.Currency2.CurrencyCode {
 		return errors.New("Currency1,Currency2 should not be equal")
 	}
 	return nil

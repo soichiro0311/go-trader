@@ -1,7 +1,6 @@
 package main
 
 import (
-	"../component"
 	"../controller"
 	"../db"
 	"../repository"
@@ -13,9 +12,9 @@ func main() {
 	db.Init()
 
 	orderRepository := repository.NewOrderRepositoryImpl()
-	orderService := service.NewOrderService(orderRepository)
+	boardInfoRepository := repository.NewBoardInfoRepositoryImpl()
+	orderService := service.NewOrderService(orderRepository, boardInfoRepository)
 	orderController := controller.NewOrderController(orderService)
-	component.GetPriceGenerator().Generate("BTC", "USD")
 
 	web.Init(orderController)
 }

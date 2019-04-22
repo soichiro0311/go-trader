@@ -9,7 +9,7 @@ import (
 
 type Order struct {
 	Id            string   `gorm:"primary_key" json:"id"`
-	Amount        int64    `json:"amount"`
+	Amount        float64  `json:"amount"`
 	Currency1     Currency `sql:"-" json:"-"`
 	CurrencyCode1 string   `json:"currency1"`
 	Currency2     Currency `sql:"-" json:"-"`
@@ -18,7 +18,7 @@ type Order struct {
 	OrderDatetime string   `json:"order_datetime"`
 }
 
-func NewOrder(amount int64, currency1 Currency, currency2 Currency, price Price) (error, *Order) {
+func NewOrder(amount float64, currency1 Currency, currency2 Currency, price Price) (error, *Order) {
 	order := new(Order)
 
 	rand.Seed(time.Now().UnixNano())
@@ -48,7 +48,7 @@ func (order *Order) ToString() string {
 	return "id:" + order.Id +
 		" currency1:" + order.Currency1.Code() +
 		" currency2:" + order.Currency2.Code() +
-		" amount:" + strconv.FormatInt(order.Amount, 10) +
+		" amount:" + strconv.FormatFloat(order.Amount, 'e', 10, 64) +
 		" quantity:" + strconv.FormatFloat(order.Quantity, 'e', 10, 64) +
 		" orderDatetime:" + order.OrderDatetime
 }

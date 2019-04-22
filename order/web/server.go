@@ -7,7 +7,7 @@ import (
 
 func Init(ctrl *controller.OrderController) {
 	r := router(ctrl)
-	r.Run()
+	r.Run(":8090")
 }
 
 func router(ctrl *controller.OrderController) *gin.Engine {

@@ -1,13 +1,13 @@
 package domain
 
 type Currency struct {
-	CurrencyCode string `gorm:"primary_key"`
+	CurrencyCode string `gorm:"primary_key" json:"currency_code"`
 }
 
-func NewCurrency(currencyCode string) *Currency {
+func NewCurrency(currencyCode string) Currency {
 	currency := new(Currency)
 	currency.CurrencyCode = currencyCode
-	return currency
+	return *currency
 }
 
 func (currency *Currency) Code() string {
