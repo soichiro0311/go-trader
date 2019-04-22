@@ -11,19 +11,19 @@ import (
 	"../repository"
 )
 
-type BoardInfoService struct {
-	repository repository.BoardInfoRepository
+type QuoteInfoService struct {
+	repository repository.QuoteInfoRepository
 }
 
-func NewBoardInfoService(repository repository.BoardInfoRepository) *BoardInfoService {
-	service := new(BoardInfoService)
+func NewQuoteInfoService(repository repository.QuoteInfoRepository) *QuoteInfoService {
+	service := new(QuoteInfoService)
 	service.repository = repository
 	service.publishInfo()
 	return service
 }
 
 // TODO: 外部サービスからレートを取得できるように修正
-func (service *BoardInfoService) GenerateInfo(cur1 string, cur2 string) domain.BoardInfo {
+func (service *QuoteInfoService) GenerateInfo(cur1 string, cur2 string) domain.QuoteInfo {
 	rand.Seed(time.Now().UnixNano())
 
 	value := rand.Int63n(200)*1000 + 1
@@ -36,7 +36,7 @@ func (service *BoardInfoService) GenerateInfo(cur1 string, cur2 string) domain.B
 
 	amount := round(rand.Float64(), 3)
 
-	error, info := domain.NewBoardInfo(domain.NewCurrency(cur1), domain.NewCurrency(cur2), amount, price)
+	error, info := domain.NewQuoteInfo(domain.NewCurrency(cur1), domain.NewCurrency(cur2), amount, price)
 	for _, v := range error {
 		if v != nil {
 			panic(v)
@@ -46,17 +46,17 @@ func (service *BoardInfoService) GenerateInfo(cur1 string, cur2 string) domain.B
 	return info
 }
 
-func (service *BoardInfoService) GetByCurrencyPair(cur1 string, cur2 string) []domain.BoardInfo {
+func (service *QuoteInfoService) GetByCurrencyPair(cur1 string, cur2 string) []domain.QuoteInfo {
 	return service.repository.FindByCurrencyPair(domain.NewCurrency(cur1), domain.NewCurrency(cur2))
 }
 
-func (service *BoardInfoService) GetLatestByCurrencyPair(cur1 string, cur2 string) domain.BoardInfo {
+func (service *QuoteInfoService) GetLatestByCurrencyPair(cur1 string, cur2 string) domain.QuoteInfo {
 	infos := service.repository.FindByCurrencyPair(domain.NewCurrency(cur1), domain.NewCurrency(cur2))
 	sort.SliceStable(infos, func(i, j int) bool { return infos[i].AccuredTime > infos[j].AccuredTime })
 	return infos[0]
 }
 
-func (service *BoardInfoService) publishInfo() {
+func (service *QuoteInfoService) publishInfo() {
 	go func() {
 		ticker := time.NewTicker(5 * time.Second) // 1秒間隔のTicker
 

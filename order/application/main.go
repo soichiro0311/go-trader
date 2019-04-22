@@ -12,8 +12,8 @@ func main() {
 	db.Init()
 
 	orderRepository := repository.NewOrderRepositoryImpl()
-	boardInfoRepository := repository.NewBoardInfoRepositoryImpl()
-	orderService := service.NewOrderService(orderRepository, boardInfoRepository)
+	quoteInfoRepository := repository.NewQuoteInfoRepositoryImpl()
+	orderService := service.NewOrderService(orderRepository, quoteInfoRepository)
 	orderController := controller.NewOrderController(orderService)
 
 	web.Init(orderController)

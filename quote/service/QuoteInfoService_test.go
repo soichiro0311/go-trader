@@ -8,7 +8,7 @@ import (
 )
 
 func TestGetByCurrencyPair(t *testing.T) {
-	service := NewBoardInfoService(repository.NewBoardInfoRepositoryImpl())
+	service := NewQuoteInfoService(repository.NewQuoteInfoRepositoryImpl())
 	cur1 := "BTC"
 	cur2 := "USD"
 	cur3 := "ETH"
@@ -31,7 +31,7 @@ func TestGetByCurrencyPair(t *testing.T) {
 }
 
 func TestGetLatestByCurrencyPair(t *testing.T) {
-	service := NewBoardInfoService(repository.NewBoardInfoRepositoryImpl())
+	service := NewQuoteInfoService(repository.NewQuoteInfoRepositoryImpl())
 	cur1 := "BTC"
 	cur2 := "USD"
 

@@ -16,7 +16,7 @@ func NewRegisterOrderRequest(currency1 string, currency2 string) *RegisterOrderR
 	return req
 }
 
-func (req *RegisterOrderRequest) ToOrder(info domain.BoardInfo) *domain.Order {
+func (req *RegisterOrderRequest) ToOrder(info domain.QuoteInfo) *domain.Order {
 	error, order := domain.NewOrder(info.Amount, domain.NewCurrency(req.CurrencyCode1), domain.NewCurrency(req.CurrencyCode2), info.Price)
 	if error == nil {
 		return order

@@ -1,7 +1,7 @@
 # go-trader
 
 ## Overview
-- trading simulate cli application. `board-application` publish boardInfo(BTC/USD). `order-application` order latest board.
+- trading simulate cli application. `quote-application` publish QuoteInfo(BTC/USD). `order-application` order latest quote.
 
 ## Getting Started
 ```
@@ -9,14 +9,14 @@ cd order/resource/docker
 docker-compose up -d
 cd ../../application
 go run main.go <- order-application
-cd ../../board/application
-go run main.go <- board-application
+cd ../../quote/application
+go run main.go <- quote-application
 ```
 
 ## APIs
-### board
-- `/board/latest/BTC/USD` : get latest board infomation(BTC/USD).This infomation is always displayed console.
-- `/board/history/BTC/USD` : get all board infomation(BTC/USD).
+### quote
+- `/quote/latest/BTC/USD` : get latest quote infomation(BTC/USD).This infomation is always displayed console.
+- `/quote/history/BTC/USD` : get all quote infomation(BTC/USD).
 
 ### order
 - `/order/register` : register order. you can make a POST request curl command. Example is 

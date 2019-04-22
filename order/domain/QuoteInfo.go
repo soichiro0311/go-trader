@@ -1,6 +1,6 @@
 package domain
 
-type BoardInfo struct {
+type QuoteInfo struct {
 	Currency1   Currency `json:"currency1"`
 	Currency2   Currency `json:"currency2"`
 	Amount      float64  `json:"amount"`

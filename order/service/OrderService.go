@@ -8,18 +8,18 @@ import (
 
 type OrderService struct {
 	orderRepository repository.OrderRepository
-	boardRepository repository.BoardInfoRepository
+	quoteRepository repository.QuoteInfoRepository
 }
 
-func NewOrderService(orderRep repository.OrderRepository, boardRep repository.BoardInfoRepository) *OrderService {
+func NewOrderService(orderRep repository.OrderRepository, quoteRep repository.QuoteInfoRepository) *OrderService {
 	service := new(OrderService)
 	service.orderRepository = orderRep
-	service.boardRepository = boardRep
+	service.quoteRepository = quoteRep
 	return service
 }
 
 func (service *OrderService) RegisterOrder(req model.RegisterOrderRequest) {
-	info := service.boardRepository.GetLatestInfoByCurPair(req.CurrencyCode1, req.CurrencyCode2)
+	info := service.quoteRepository.GetLatestInfoByCurPair(req.CurrencyCode1, req.CurrencyCode2)
 	order := req.ToOrder(info)
 	service.orderRepository.Save(*order)
 }
