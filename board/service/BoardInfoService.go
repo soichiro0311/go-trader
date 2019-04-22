@@ -26,7 +26,7 @@ func NewBoardInfoService(repository repository.BoardInfoRepository) *BoardInfoSe
 func (service *BoardInfoService) GenerateInfo(cur1 string, cur2 string) domain.BoardInfo {
 	rand.Seed(time.Now().UnixNano())
 
-	value := rand.Int63n(2000000) * 1000
+	value := rand.Int63n(200)*1000 + 1
 	error, price := domain.NewPrice(domain.NewCurrency(cur1), domain.NewCurrency(cur2), value)
 	for _, v := range error {
 		if v != nil {
@@ -34,8 +34,8 @@ func (service *BoardInfoService) GenerateInfo(cur1 string, cur2 string) domain.B
 		}
 	}
 
-	shift := math.Pow(10, 5)
-	amount := math.Trunc(rand.Float64()*shift) / shift
+	amount := round(rand.Float64(), 3)
+
 	error, info := domain.NewBoardInfo(domain.NewCurrency(cur1), domain.NewCurrency(cur2), amount, price)
 	for _, v := range error {
 		if v != nil {
@@ -68,4 +68,9 @@ func (service *BoardInfoService) publishInfo() {
 			}
 		}
 	}()
+}
+
+func round(f float64, places int) float64 {
+	shift := math.Pow(10, float64(places))
+	return math.Floor(f*shift+.5) / shift
 }

@@ -2,6 +2,7 @@ package domain
 
 import (
 	"errors"
+	"fmt"
 	"strconv"
 	"time"
 )
@@ -48,7 +49,7 @@ func (info BoardInfo) validateCurrency() error {
 func (info BoardInfo) Display() string {
 	return "currency1:" + info.Currency1.Code() +
 		" currency2:" + info.Currency2.Code() +
-		" amount:" + strconv.FormatFloat(info.Amount, 'e', 5, 64) +
+		" amount:" + fmt.Sprintf("%.3f", info.Amount) +
 		" price: " + strconv.FormatInt(info.Price.Value, 10) +
 		" accured_datetime: " + info.AccuredTime
 
