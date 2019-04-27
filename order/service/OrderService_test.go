@@ -40,6 +40,7 @@ func TestRegisterOrder(t *testing.T) {
 	}
 }
 
+// TODO: BID -> SELL, ASK -> BUYの注文へんかんを行う
 func TestOrders(t *testing.T) {
 	var orderRep repository.OrderRepository = repository.NewOrderRepositoryMock()
 	repMock := repository.NewQuoteInfoRepositoryMock()

@@ -45,3 +45,5 @@ func TestNewQuoteInfoErrorCurrency(t *testing.T) {
 		t.Fail()
 	}
 }
+
+// TODO: BID,ASKでQuoteを色分けして出す
