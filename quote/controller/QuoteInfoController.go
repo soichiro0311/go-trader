@@ -22,6 +22,10 @@ func (ctrl QuoteInfoController) InfosByCurPairHist(c *gin.Context) {
 }
 
 func (ctrl QuoteInfoController) InfosByCurPair(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
+	c.Header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	c.Header("Access-Control-Max-Age", "86400")
+	c.Header("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
 	cur1 := c.Param("cur1")
 	cur2 := c.Param("cur2")
 	c.JSON(200, ctrl.service.GetLatestByCurrencyPair(cur1, cur2))

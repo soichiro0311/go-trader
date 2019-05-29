@@ -16,7 +16,7 @@ func NewQuoteInfoRepositoryImpl() *quoteInfoRepositoryImpl {
 }
 
 func (repository *quoteInfoRepositoryImpl) GetLatestInfoByCurPair(currencyCode1 string, currencyCode2 string) domain.QuoteInfo {
-	resp, err := http.Get("http://localhost:8080/quote/latest/" + currencyCode1 + "/" + currencyCode2)
+	resp, err := http.Get("http://localhost:8091/quote/latest/" + currencyCode1 + "/" + currencyCode2)
 	if err != nil {
 		panic(err)
 	}
