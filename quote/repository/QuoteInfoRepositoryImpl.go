@@ -2,20 +2,29 @@ package repository
 
 import (
 	"../domain"
+	"../enum"
 )
 
 type QuoteInfoRepositoryImpl struct {
-	cache map[int]domain.QuoteInfo
+	cache map[QuoteInfoKey]domain.QuoteInfo
+}
+
+type QuoteInfoKey struct {
+	id   int
+	side enum.SideEnum
 }
 
 func NewQuoteInfoRepositoryImpl() *QuoteInfoRepositoryImpl {
 	repository := new(QuoteInfoRepositoryImpl)
-	repository.cache = map[int]domain.QuoteInfo{}
+	repository.cache = map[QuoteInfoKey]domain.QuoteInfo{}
 	return repository
 }
 
 func (repository *QuoteInfoRepositoryImpl) Save(info domain.QuoteInfo) {
-	repository.cache[len(repository.cache)] = info
+	key := new(QuoteInfoKey)
+	key.id = len(repository.cache)
+	key.side = info.Side
+	repository.cache[*key] = info
 }
 
 func (repository *QuoteInfoRepositoryImpl) FindByCurrencyPair(cur1 domain.Currency, cur2 domain.Currency) []domain.QuoteInfo {

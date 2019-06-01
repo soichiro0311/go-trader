@@ -2,11 +2,19 @@ import { observable } from "mobx";
 import axios from 'axios';
 
 class TodoStore {
-    @observable amount = "";
+    @observable latestBuyPrice = "";
+    @observable latestSellPrice = "";
 
     pollingQuote(){
         axios.get("http://localhost:8091/quote/latest/BTC/USD").then((results) => {
-            this.amount = results.data.price.value
+            var arr = Object.entries(results.data)
+            for (let [key, value] of arr) {
+                if(value.side == "BUY"){
+                    this.latestBuyPrice = value.price
+                }else{
+                    this.latestSellPrice = value.price
+                }
+            }
         })
     }
 }

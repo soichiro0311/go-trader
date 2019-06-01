@@ -7,14 +7,15 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 @observer
 export default class TodoList extends React.Component {
   render() {
-    const { amount } = this.props.store;
+    const { latestBuyPrice,latestSellPrice } = this.props.store;
 
     return (<div>
     <h1>
       Trader Simulator
     </h1>  
       <MuiThemeProvider>
-        <RaisedButton secondary={true}>{amount}</RaisedButton>
+      <RaisedButton primary={true}>{latestBuyPrice}</RaisedButton>
+        <RaisedButton secondary={true}>{latestSellPrice}</RaisedButton>
       </MuiThemeProvider>
     </div>);
   };

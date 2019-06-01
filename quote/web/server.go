@@ -17,7 +17,6 @@ func router(ctrl *controller.QuoteInfoController) *gin.Engine {
 
 	u := r.Group("/quote")
 	{
-		u.GET("/history/:cur1/:cur2", ctrl.InfosByCurPairHist)
 		u.GET("/latest/:cur1/:cur2", ctrl.InfosByCurPair)
 	}
 

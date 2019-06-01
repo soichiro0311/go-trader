@@ -5,22 +5,26 @@ import (
 	"fmt"
 	"strconv"
 	"time"
+
+	"../enum"
 )
 
 type QuoteInfo struct {
-	Currency1   Currency `json:"currency1"`
-	Currency2   Currency `json:"currency2"`
-	Amount      float64  `json:"amount"`
-	Price       Price    `json:"price"`
-	AccuredTime string   `json:"accured_time"`
+	Currency1   Currency
+	Currency2   Currency
+	Amount      float64
+	Price       Price
+	Side        enum.SideEnum
+	AccuredTime string
 }
 
-func NewQuoteInfo(cur1 Currency, cur2 Currency, amount float64, price Price) ([]error, QuoteInfo) {
+func NewQuoteInfo(cur1 Currency, cur2 Currency, amount float64, price Price, side enum.SideEnum) ([]error, QuoteInfo) {
 	info := new(QuoteInfo)
 	info.Currency1 = cur1
 	info.Currency2 = cur2
 	info.Amount = amount
 	info.Price = price
+	info.Side = side
 	info.AccuredTime = time.Now().Format("20060102150405")
 	amountError := info.validateAmount()
 	currencyError := info.validateCurrency()
