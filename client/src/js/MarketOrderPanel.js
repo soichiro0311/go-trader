@@ -5,7 +5,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 @observer
-export default class TodoList extends React.Component {
+export default class MarketOrderPanel extends React.Component {
   render() {
     const { latestBuyPrice,latestSellPrice } = this.props.store;
 

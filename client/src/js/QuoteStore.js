@@ -1,7 +1,7 @@
 import { observable } from "mobx";
 import axios from 'axios';
 
-class TodoStore {
+class QuoteStore {
     @observable latestBuyPrice = "";
     @observable latestSellPrice = "";
 
@@ -19,7 +19,7 @@ class TodoStore {
     }
 }
 
-var store = new TodoStore();
+var store = new QuoteStore();
 
 setInterval(() => store.pollingQuote(), 1000)
 

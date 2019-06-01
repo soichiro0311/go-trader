@@ -2,9 +2,9 @@ import "../css/index.css";
 import React from "react";
 import ReactDOM from "react-dom";
 
-import TodoList from "./TodoList";
-import store from "./TodoStore";
+import MarketOrderPanel from "./MarketOrderPanel";
+import store from "./QuoteStore";
 
 const app = document.getElementById("app");
 
-ReactDOM.render(<TodoList store={store} />, app);
+ReactDOM.render(<MarketOrderPanel store={store} />, app);
