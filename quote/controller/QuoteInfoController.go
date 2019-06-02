@@ -31,3 +31,20 @@ func (ctrl QuoteInfoController) InfosByCurPair(c *gin.Context) {
 	}
 	c.JSON(200, latestInfoDto)
 }
+
+func (ctrl QuoteInfoController) AllInfosByCurPair(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
+	c.Header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	c.Header("Access-Control-Max-Age", "86400")
+	c.Header("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+	cur1 := c.Param("cur1")
+	cur2 := c.Param("cur2")
+	allInfo := ctrl.service.GetAllByCurrencyPair(cur1, cur2)
+	allInfoDto := map[enum.SideEnum][]dto.QuoteInfoDto{}
+	for i, vArr := range allInfo {
+		for _, v := range vArr {
+			allInfoDto[i] = append(allInfoDto[i], *dto.NewQuoteInfoDto(v))
+		}
+	}
+	c.JSON(200, allInfoDto)
+}

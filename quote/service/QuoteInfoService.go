@@ -80,6 +80,30 @@ func (service *QuoteInfoService) GetLatestByCurrencyPair(cur1 string, cur2 strin
 	return latestInfos
 }
 
+func (service *QuoteInfoService) GetAllByCurrencyPair(cur1 string, cur2 string) map[enum.SideEnum][]domain.QuoteInfo {
+	infos := service.repository.FindByCurrencyPair(domain.NewCurrency(cur1), domain.NewCurrency(cur2))
+	buyInfos := []domain.QuoteInfo{}
+	for _, v := range infos {
+		if v.Side == enum.BUY {
+			buyInfos = append(buyInfos, v)
+		}
+	}
+	sort.SliceStable(buyInfos, func(i, j int) bool { return buyInfos[i].AccuredTime > buyInfos[j].AccuredTime })
+
+	sellInfos := []domain.QuoteInfo{}
+	for _, v := range infos {
+		if v.Side == enum.SELL {
+			sellInfos = append(sellInfos, v)
+		}
+	}
+	sort.SliceStable(sellInfos, func(i, j int) bool { return sellInfos[i].AccuredTime > sellInfos[j].AccuredTime })
+
+	allInfos := map[enum.SideEnum][]domain.QuoteInfo{}
+	allInfos[enum.BUY] = buyInfos
+	allInfos[enum.SELL] = sellInfos
+	return allInfos
+}
+
 func (service *QuoteInfoService) publishInfo() {
 	go func() {
 		ticker := time.NewTicker(5 * time.Second) // 1秒間隔のTicker
